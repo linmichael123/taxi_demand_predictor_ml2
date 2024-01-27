@@ -19,7 +19,7 @@ def get_feature_store() -> FeatureStore:
     project = get_hopsworks_project()
     return project.get_feature_store()
 
-def get_model_prediction(model, features: pd.DataFrame) -> pd.DataFrame:
+def get_model_predictions(model, features: pd.DataFrame) -> pd.DataFrame:
 
     predictions = model.predict(features)
 
@@ -58,9 +58,9 @@ def load_batch_of_features_from_store(
 
     x = np.ndarray(shape=(len(location_ids),n_features), dtypes=np.float32)
     for i, location_ids in enumerate(location_ids):
-        ts_data_i = ts_data.loc(ts_data.pickup_location_id == location_ids, :)
+        ts_data_i = ts_data.loc[ts_data.pickup_location_id == location_ids, :]
         ts_data_i = ts_data_i.sort_values(by=['pickup_hour'])
-        x[i,:] = ts_data_id['rides'].values
+        x[i,:] = ts_data_i['rides'].values
 
     features = pd.DataFrame(
         x,
@@ -71,3 +71,21 @@ def load_batch_of_features_from_store(
 
     return features
 
+
+def load_model_registry():
+
+    import joblib
+    from pathlib import Path
+
+    project = get_hopsworks_project()
+    model_registry = project.get_model_registry()
+
+    model = model_registry.get_model(
+        name = config.MODEL_NAME,
+        version = config.MODEL_VERSION,
+    )
+
+    model_dir = model.download()
+    model = joblib.load(Path(model_dir) / 'model.pkl')
+
+    return model
