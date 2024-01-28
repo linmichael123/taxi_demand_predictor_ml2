@@ -63,7 +63,7 @@ def load_batch_of_features_from_store(
     ts_data.sort_values(by=['pickup_location_id','pickup_hour'], inplace=True)
     print(f'{ts_data=}')
 
-    x = np.ndarray(shape=(len(location_ids),n_features), dtypes=np.float32)
+    x = np.ndarray(shape=(len(location_ids),n_features), dtype=np.float32)
     for i, location_ids in enumerate(location_ids):
         ts_data_i = ts_data.loc[ts_data.pickup_location_id == location_ids, :]
         ts_data_i = ts_data_i.sort_values(by=['pickup_hour'])
