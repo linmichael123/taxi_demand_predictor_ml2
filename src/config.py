@@ -12,11 +12,11 @@ except:
     raise Exception('Create an .env file on the project root with the HOPSWORKS_API_KEY')
 
 FEATURE_GROUP_NAME = 'time_series_hourly_feature_group'
-FEATURE_GROUP_VERSION = 1
+FEATURE_GROUP_VERSION = 2
 FEATURE_VIEW_NAME = 'time_series_hourly_feature_view'
 FEATURE_VIEW_VERSION = 1
 
 MODEL_NAME = "taxi_demand_predictor"
 
-n_features = 24*28
+N_FEATURES = 24*28
 
