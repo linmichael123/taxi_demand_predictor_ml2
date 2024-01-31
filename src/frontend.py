@@ -119,6 +119,7 @@ prev_hour_predictions_ready = \
 
 # breakpoint()
 
+
 if next_hour_predictions_ready:
     # predictions for the current hour are available
     predictions_df = predictions_df[predictions_df.pickup_hour == current_date]
