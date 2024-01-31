@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from src.paths import PARENT_DIR
-# from src.feature_store_api import FeatureGroupConfig, FeatureViewConfig
+from src.feature_store_api import FeatureGroupConfig, FeatureViewConfig
 
 load_dotenv(PARENT_DIR / '.env')
 
@@ -14,34 +14,42 @@ except:
 
 FEATURE_GROUP_NAME = 'time_series_hourly_feature_group'
 FEATURE_GROUP_VERSION = 2
-# FEATURE_GROUP_METADATA = FeatureGroupConfig(
-#     name='time_series_hourly_feature_group',
-#     version=3,
-#     description='Feature group with hourly time-series data of historical taxi rides',
-#     primary_key=['pickup_location_id', 'pickup_ts'],
-#     event_time='pickup_ts',
-#     online_enabled=True,
-# )
+FEATURE_GROUP_METADATA = FeatureGroupConfig(
+    name='time_series_hourly_feature_group',
+    version=3,
+    description='Feature group with hourly time-series data of historical taxi rides',
+    primary_key=['pickup_location_id', 'pickup_ts'],
+    event_time='pickup_ts',
+    online_enabled=True,
+)
 
 FEATURE_VIEW_NAME = 'time_series_hourly_feature_view'
 FEATURE_VIEW_VERSION = 2
-# FEATURE_VIEW_METADATA = FeatureViewConfig(
-#     name='time_series_hourly_feature_view',
-#     version=3,
-#     feature_group=FEATURE_GROUP_METADATA,
-# )
+FEATURE_VIEW_METADATA = FeatureViewConfig(
+    name='time_series_hourly_feature_view',
+    version=3,
+    feature_group=FEATURE_GROUP_METADATA,
+)
 
 
 MODEL_NAME = "taxi_demand_predictor_next_hour"
 MODEL_VERSION = 1
 FEATURE_GROUP_MODEL_PREDICTIONS = 'model_predictions_feature_group'
-# FEATURE_GROUP_PREDICTIONS_METADATA = FeatureGroupConfig(
-#     name='model_predictions_feature_group',
-#     version=4,
-#     description="Predictions generate by our production model",
-#     primary_key = ['pickup_location_id', 'pickup_ts'],
-#     event_time='pickup_ts',
-# )
+FEATURE_GROUP_PREDICTIONS_METADATA = FeatureGroupConfig(
+    name='model_predictions_feature_group',
+    version=1,
+    description="Predictions generate by our production model",
+    primary_key = ['pickup_location_id', 'pickup_ts'],
+    event_time='pickup_ts',
+)
+
+
+FEATURE_VIEW_MODEL_PREDICTIONS = 'model_predictions_feature_view'
+FEATURE_VIEW_PREDICTIONS_METADATA = FeatureViewConfig(
+    name='model_predictions_feature_view',
+    version=1,
+    feature_group=FEATURE_GROUP_PREDICTIONS_METADATA,
+)
 
 N_FEATURES = 24*28
 

@@ -6,8 +6,8 @@ import pandas as pd
 import numpy as np
 
 import src.config as config
-# from src.feature_store_api import get_feature_store, get_or_create_feature_view
-# from src.config import FEATURE_VIEW_METADATA
+from src.feature_store_api import get_feature_store, get_or_create_feature_view
+from src.config import FEATURE_VIEW_METADATA
 
 def get_hopsworks_project() -> hopsworks.project.Project:
 
