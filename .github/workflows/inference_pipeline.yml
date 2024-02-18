@@ -1,12 +1,14 @@
 name: hourly-taxi-demand-inference-pipeline
 
 on:
-    workflow_run:
-        workflows: ["hourly-taxi-demand-feature-pipeline-with-cache"]
-        types:
-            - completed
-
-    workflow_dispatch:
+    # workflow_run:
+    #     workflows: ["hourly-taxi-demand-feature-pipeline-with-cache"]
+    #     types:
+    #         - completed
+  schedule:
+    - cron: '30 * * * *'
+    
+  workflow_dispatch:
 
 env:
     PYTHON_VERSION: 3.9
@@ -51,6 +53,6 @@ jobs:
             
         - name: Run feature generation script
           env: 
-            # HOPSWORKS_PROJECT_NAME: ${{ secrets.HOPSWORKS_PROJECT_NAME }}
+            HOPSWORKS_PROJECT_NAME: ${{ secrets.HOPSWORKS_PROJECT_NAME }}
             HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
           run: poetry run jupyter nbconvert --to notebook --execute notebooks/14_inference_pipeline.ipynb
