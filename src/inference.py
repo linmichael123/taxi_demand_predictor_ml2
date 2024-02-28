@@ -8,6 +8,7 @@ import numpy as np
 import src.config as config
 from src.feature_store_api import get_feature_store, get_or_create_feature_view
 from src.config import FEATURE_VIEW_METADATA
+from src.data import add_missing_slots
 
 def get_hopsworks_project() -> hopsworks.project.Project:
 
@@ -62,6 +63,7 @@ def load_batch_of_features_from_store(
     pickup_ts_from = int(fetch_data_from.timestamp() * 1000)
     pickup_ts_to = int(fetch_data_to.timestamp() * 1000)
     ts_data = ts_data[ts_data.pickup_ts.between(pickup_ts_from, pickup_ts_to)]
+    ts_data = add_missing_slots(ts_data)
 
     # sort data by location and time
     ts_data.sort_values(by=['pickup_location_id', 'pickup_hour'], inplace=True)

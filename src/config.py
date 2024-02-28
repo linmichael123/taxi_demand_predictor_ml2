@@ -33,7 +33,7 @@ FEATURE_VIEW_METADATA = FeatureViewConfig(
 
 
 MODEL_NAME = "taxi_demand_predictor_next_hour"
-MODEL_VERSION = 3
+MODEL_VERSION = 4
 
 FEATURE_GROUP_MODEL_PREDICTIONS = 'model_predictions_feature_group'
 FEATURE_GROUP_PREDICTIONS_METADATA = FeatureGroupConfig(

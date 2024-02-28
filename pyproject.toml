@@ -2,7 +2,7 @@
 name = "src"
 version = "0.1.0"
 description = ""
-authors = ["Pau <plabartabajo@gmail.com>"]
+authors = ["Mike <michael.tz.lin@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.9.7 || >3.9.7,<3.10"

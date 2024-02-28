@@ -20,7 +20,7 @@ st.set_page_config(layout="wide")
 # title
 # current_date = datetime.strptime('2023-01-05 12:00:00', '%Y-%m-%d %H:%M:%S')
 current_date = pd.to_datetime(datetime.utcnow(), utc=True).floor('H')
-st.title(f'NYC Taxi demand predictions')
+st.title(f'Taxi demand prediction 🚕')
 st.header(f'{current_date} UTC')
 
 progress_bar = st.sidebar.header('⚙️ Working Progress')
@@ -118,7 +118,6 @@ prev_hour_predictions_ready = \
     False if predictions_df[predictions_df.pickup_hour == (current_date - timedelta(hours=1))].empty else True
 
 # breakpoint()
-
 
 if next_hour_predictions_ready:
     # predictions for the current hour are available
@@ -229,9 +228,8 @@ with st.spinner(text="Plotting time-series data"):
             features=features_df,
             targets=predictions_df['predicted_demand'],
             predictions=pd.Series(predictions_df['predicted_demand']),
-            # display_title=False,
+            display_title=False,
         )
         st.plotly_chart(fig, theme="streamlit", use_container_width=True, width=1000)
         
     progress_bar.progress(6/N_STEPS)
-
