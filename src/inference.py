@@ -43,7 +43,6 @@ def load_batch_of_features_from_store(
             - `pickup_hour`
             - `rides`
             - `pickup_location_id`
-            - `pickpu_ts`
     """
     n_features = config.N_FEATURES
 
@@ -58,12 +57,14 @@ def load_batch_of_features_from_store(
         start_time=fetch_data_from - timedelta(days=1),
         end_time=fetch_data_to + timedelta(days=1)
     )
+    fetch_data_from = fetch_data_from.tz_localize('UTC')
+
+    # filter data to the time period we are interested in
+    ts_data = ts_data[ts_data.pickup_hour >= fetch_data_from]
+    # ts_data = add_missing_slots(ts_data)
     
     # filter data to the time period we are interested in
-    pickup_ts_from = int(fetch_data_from.timestamp() * 1000)
-    pickup_ts_to = int(fetch_data_to.timestamp() * 1000)
-    ts_data = ts_data[ts_data.pickup_ts.between(pickup_ts_from, pickup_ts_to)]
-    ts_data = add_missing_slots(ts_data)
+    # ts_data = add_missing_slots(ts_data)
 
     # sort data by location and time
     ts_data.sort_values(by=['pickup_location_id', 'pickup_hour'], inplace=True)
