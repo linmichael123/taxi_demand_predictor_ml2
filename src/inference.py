@@ -54,17 +54,12 @@ def load_batch_of_features_from_store(
 
     # add plus minus margin to make sure we do not drop any observation
     ts_data = feature_view.get_batch_data(
-        start_time=fetch_data_from - timedelta(days=1),
-        end_time=fetch_data_to + timedelta(days=1)
-    )
-    fetch_data_from = fetch_data_from.tz_localize('UTC')
-
-    # filter data to the time period we are interested in
-    ts_data = ts_data[ts_data.pickup_hour >= fetch_data_from]
-    # ts_data = add_missing_slots(ts_data)
-    
-    # filter data to the time period we are interested in
-    # ts_data = add_missing_slots(ts_data)
+    start_time=fetch_data_from - timedelta(days=1),
+    end_time=fetch_data_to + timedelta(days=1)
+)
+    if ts_data.pickup_hour.dt.tz is None:
+        ts_data.pickup_hour = ts_data.pickup_hour.dt.tz_localize('UTC')
+    ts_data = ts_data[ts_data.pickup_hour.between(fetch_data_from,fetch_data_to)]
 
     # sort data by location and time
     ts_data.sort_values(by=['pickup_location_id', 'pickup_hour'], inplace=True)
